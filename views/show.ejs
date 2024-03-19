@@ -1,0 +1,77 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+    <body>
+        <h2> Details of : <%=doc.title%>
+        </h2>
+        <a href="/listing">Go Back <= </a>
+                <br><br>
+                <div class="card" style="width: 18rem;">
+                    <img src="<%=doc.image.url%>" class="card-img-top show-img" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%=doc.title%>
+                        </h5>
+                    </div>
+                </div>
+                <li>
+                    <%=doc.description %>
+                </li>
+                <li>
+                    <%=doc.price %>
+                </li>
+                <li>
+                    <%=doc.location %>
+                </li>
+                <li>
+                    <%=doc.country %>
+                </li>
+
+                <a href="/listing/<%=doc.id %>/edit"> <i>Edit this* </i> </a>
+                <br><br>
+                <form action="/listing/<%=doc._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-outline-danger">Delete this**</button>
+                </form>
+
+
+                <hr>
+
+                <h3>Drop your Review Here :) </h3>
+                <div class="row">
+                    <div class="col-8 offset-2">
+                        <form action="/listing/<%=doc.id%>/reviews" method="POST">
+                            <label class="form-label" for="rating"> Rating </label>
+                            <br>
+                            <input type="range" min="1" max="5" class="form-range" name="rating">
+
+                            <label for="comment">Comment</label>
+                            <textarea name="comment" id="" cols="30" rows="10"
+                                class="form-control">Write Something here... </textarea>
+                            <br>
+
+                            <button class="btn btn-outline-info">Submit </button>
+                        </form>
+                    </div>
+                </div>
+                <hr>
+                <div>All Reviews :</div>
+                <!-- <%= doc.reviews %> -->
+
+                <div class="row">
+                    <%for (review of doc.reviews ) {%>
+                        <div class="card col-4 ms-3 border">
+                            <div class="card-body">
+                                <h5 class="card-title">John</h5>
+                                <p class="card-text">
+                                    <%=review.comment%>
+                                </p>
+                                <p class="card-text">
+                                    <%=review.rating%> Star
+                                </p>
+                                <form action="/listing/<%=doc._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                                    <button class="btn btn-dark btn-small"> Delete Review </button>
+                                </form>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+    </body>
